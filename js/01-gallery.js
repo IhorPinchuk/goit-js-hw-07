@@ -16,11 +16,11 @@ console.log(galleryItems);
 //     .map(({ preview, original, description }) => {
 //       return `
 //         <div class = "gallery__item">
-//             <a class="gallery__link" href="#">
+//             <a class="gallery__link" href="${original}">
 //                 <img
 //                     class = "gallery__image"
 //                     src = "${preview}"
-//                     data-source = "${original}"
+//                     data-source="${original}"
 //                     alt = "${description}">
 //             </a>
 //         </div>`;
@@ -44,6 +44,7 @@ console.log(galleryItems);
 
 //   function handleEscClose(evt) {
 //     if (evt.key === "Escape") {
+//       galleryEl.removeEventListener("keydown", handleEscClose);
 //       instance.close();
 //     }
 //   }
@@ -55,6 +56,7 @@ const galleryEl = document.querySelector(".gallery");
 const galleryMarkup = createGalleryMarkup(galleryItems);
 
 galleryEl.append(...galleryMarkup);
+
 galleryEl.addEventListener("click", handleImageClick);
 
 function createGalleryMarkup(galleryItems) {
@@ -65,7 +67,7 @@ function createGalleryMarkup(galleryItems) {
 
     const galleryLink = document.createElement("a");
     galleryLink.className = "gallery__link";
-    galleryLink.href = "#";
+    galleryLink.href = el.original;
 
     const galleryImage = document.createElement("img");
     galleryImage.className = "gallery__image";
@@ -87,7 +89,7 @@ function handleImageClick(evt) {
   }
 
   const instance = basicLightbox.create(
-    `<img src="${evt.target.getAttribute("data-source")}">`
+    `<img src = "${evt.target.getAttribute("data-source")}">`
   );
 
   instance.show();
@@ -96,6 +98,7 @@ function handleImageClick(evt) {
 
   function handleEscClose(evt) {
     if (evt.key === "Escape") {
+      galleryEl.removeEventListener("keydown", handleEscClose);
       instance.close();
     }
   }
